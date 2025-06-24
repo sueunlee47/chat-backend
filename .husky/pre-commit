@@ -1,1 +1,1 @@
-npm run echotest
+npx lint-staged
