@@ -1,4 +1,6 @@
 import {
+  ConnectedSocket,
+  MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
@@ -25,7 +27,10 @@ export class ChatGateway
   }
 
   @SubscribeMessage('message')
-  handleMessage(client: Socket, payload: any): string {
+  handleMessage(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() payload: any,
+  ): string {
     return 'Hello world!';
   }
 }
