@@ -19,9 +19,9 @@ export class ChatGateway
     console.log('클라이언트 연결: ', client.id);
   }
 
-  // 클라이언트 웹소켓 서버에 연결 해제했을때 (소켓 연결 시점)
+  // 클라이언트 웹소켓 서버에 연결 종료했을때 (소켓 연결 시점)
   handleDisconnect(client: Socket) {
-    console.log('클라이언트 연결 해제: ', client.id);
+    console.log('클라이언트 연결 종료: ', client.id);
   }
 
   @SubscribeMessage('message')
