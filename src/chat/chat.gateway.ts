@@ -1,9 +1,41 @@
-import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import {
+  ConnectedSocket,
+  MessageBody,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  OnGatewayInit,
+  SubscribeMessage,
+  WebSocketGateway,
+} from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway()
-export class ChatGateway {
+@WebSocketGateway({ namespace: 'chat' })
+export class ChatGateway
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
+  afterInit(server: Server) {
+    // TODO: console.log 제거
+    console.log('===================== 웹소켓 서버 초기화 완료');
+  }
+  // 클라이언트 웹소켓 서버에 연결했을때 (소켓 연결 시점)
+  handleConnection(client: Socket) {
+    // TODO: console.log 제거
+    console.log('===================== 클라이언트 연결: ', client.id);
+  }
+
+  // 클라이언트 웹소켓 서버에 연결 종료했을때 (소켓 연결 시점)
+  handleDisconnect(client: Socket) {
+    // TODO: console.log 제거
+    console.log('===================== 클라이언트 연결 종료: ', client.id);
+  }
+
   @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
+  handleMessage(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() payload: any,
+  ): string {
+    // TODO: console.log 제거
+    console.log(payload);
+    return '============================ 전송완료~';
   }
 }
